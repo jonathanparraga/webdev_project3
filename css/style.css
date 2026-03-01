@@ -650,7 +650,7 @@ iframe:hover {
 }
 
 
-@@media (min-width: 48.01rem) {
+@media (min-width: 48.01rem) {
   .page-home main > figure:nth-of-type(1) {
     float: none !important;
     width: min(100%, 26rem);
