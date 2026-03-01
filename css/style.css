@@ -707,3 +707,39 @@ iframe:hover {
   border-radius: 0.9rem;
   border: 0.08rem solid rgba(255, 255, 255, 0.12);
 }
+
+/* ===== MAP PAGE: Slider fixes (show 1 slide only) ===== */
+.places .slider {
+  overflow: hidden;
+}
+
+.places .slider-track {
+  display: flex;
+  width: 100%;
+  transform: translateX(0);
+}
+
+/* Importante: los slides deben ser exactamente 100% del ancho del slider */
+.places .slide {
+  flex: 0 0 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Quita estilos globales que afectan el slider */
+.places .slide img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  filter: none;
+}
+
+.places .slide figcaption {
+  margin: 0.6rem 0 0;
+}

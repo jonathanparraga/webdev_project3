@@ -2,18 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initSliderWithMap();
 });
 
-
+/* Google Maps callback must be global */
 window.initMap = function initMap() {
   const mapEl = document.getElementById("map");
   if (!mapEl) return;
 
-
+  // Bounds aproximados para que se vea todo Venezuela
   const veBounds = new google.maps.LatLngBounds(
     { lat: 0, lng: -74 },
     { lat: 16, lng: -59 }
   );
 
-  window.__veMap = new google.maps.Map(mapEl, {
+  const map = new google.maps.Map(mapEl, {
     center: { lat: 6.5, lng: -66.5 },
     zoom: 6,
     mapTypeControl: true,
@@ -21,17 +21,20 @@ window.initMap = function initMap() {
     fullscreenControl: true,
   });
 
-  
-  window.__veMap.fitBounds(veBounds);
+  map.fitBounds(veBounds);
 
-  
-  window.__veMarker = new google.maps.Marker({
-    map: window.__veMap,
+  const marker = new google.maps.Marker({
+    map,
     position: { lat: 6.5, lng: -66.5 },
     title: "Venezuela",
   });
 
-  window.__veInfo = new google.maps.InfoWindow();
+  const info = new google.maps.InfoWindow();
+
+  // Guardar referencias globales para que el slider las use
+  window.__veMap = map;
+  window.__veMarker = marker;
+  window.__veInfo = info;
 };
 
 function initSliderWithMap() {
@@ -39,33 +42,22 @@ function initSliderWithMap() {
   if (!slider) return;
 
   const track = slider.querySelector("[data-track]");
-  const slides = slider.querySelectorAll("[data-slide]");
+  const slides = Array.from(slider.querySelectorAll("[data-slide]"));
   const prevBtn = slider.querySelector("[data-prev]");
   const nextBtn = slider.querySelector("[data-next]");
   if (!track || slides.length === 0 || !prevBtn || !nextBtn) return;
 
   const places = {
-    angel: {
-      name: "Salto Ángel",
-      pos: { lat: 5.9672, lng: -62.5347 },
-    },
-    bolivar: {
-      name: "Pico Bolívar",
-      pos: { lat: 8.54066, lng: -71.04635 },
-    },
-    medanos: {
-      name: "Médanos de Coro",
-      pos: { lat: 11.60642, lng: -69.73763 },
-    },
-    roques: {
-      name: "Los Roques",
-      pos: { lat: 11.8545, lng: -66.7545 },
-    },
+    angel: { name: "Salto Ángel", pos: { lat: 5.9672, lng: -62.5347 } },
+    bolivar: { name: "Pico Bolívar", pos: { lat: 8.54066, lng: -71.04635 } },
+    medanos: { name: "Médanos de Coro", pos: { lat: 11.60642, lng: -69.73763 } },
+    roques: { name: "Los Roques", pos: { lat: 11.8545, lng: -66.7545 } },
   };
 
   let index = 0;
 
   function updateSlider() {
+    // mueve 1 slide a la vez
     track.style.transform = `translateX(-${index * 100}%)`;
     updateMapFromSlide();
   }
@@ -80,22 +72,22 @@ function initSliderWithMap() {
     const marker = window.__veMarker;
     const info = window.__veInfo;
 
- 
+    // Si el mapa aún no está listo, no hagas nada (evita errores)
     if (!map || !marker || !info) return;
 
+    // Un SOLO marcador: se mueve al lugar actual
     marker.setPosition(place.pos);
     marker.setTitle(place.name);
 
-
+    // Mantener vista general del país
     const veBounds = new google.maps.LatLngBounds(
       { lat: 0, lng: -74 },
       { lat: 16, lng: -59 }
     );
     map.fitBounds(veBounds);
 
-
+    // Abrir la etiqueta del lugar
     window.setTimeout(() => {
-      map.panTo(place.pos);
       info.setContent(`<strong>${place.name}</strong>`);
       info.open({ map, anchor: marker });
     }, 250);
@@ -111,41 +103,6 @@ function initSliderWithMap() {
     updateSlider();
   });
 
- 
+  // Inicial
   updateSlider();
 }
-
-  map.addListener("click", (e) => {
-    new google.maps.Marker({
-      position: e.latLng,
-      map,
-      title: "Custom marker",
-    });
-  });
-
-
-  const btn = document.createElement("button");
-  btn.textContent = "Center on my location";
-  btn.style.padding = "0.6rem 0.8rem";
-  btn.style.margin = "0.7rem";
-  btn.style.borderRadius = "0.6rem";
-  btn.style.border = "0";
-  btn.style.cursor = "pointer";
-
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(btn);
-
-  btn.addEventListener("click", () => {
-    if (!navigator.geolocation) return;
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        map.setCenter(me);
-        new google.maps.Marker({ position: me, map, title: "You are here" });
-      },
-      () => {
-      
-      }
-    );
-  });
-};
