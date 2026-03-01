@@ -732,12 +732,21 @@ iframe:hover {
   display: block;
   width: 100%;
   max-width: none;
-  height: auto;
+  /* FIX: fixed height + object-fit so ALL images are the same size regardless of original dimensions */
+  height: 26rem;
+  object-fit: cover;
+  object-position: center;
   margin: 0;
   border-radius: 0;
   border: 0;
   box-shadow: none;
   filter: none;
+}
+
+@media (max-width: 48rem) {
+  .places .slide img {
+    height: 18rem;
+  }
 }
 
 .places .slide figcaption {

@@ -107,10 +107,15 @@ function initSliderWithMap() {
     map.panTo(place.pos);
     map.setZoom(9);
 
-    // Open info window label
+    // Open info window with styled title
     window.clearTimeout(window.__veInfoTimer);
     window.__veInfoTimer = window.setTimeout(() => {
-      info.setContent(`<strong>${place.name}</strong>`);
+      info.setContent(
+        `<div style="font-family:'Montserrat',Arial,sans-serif;padding:4px 6px;min-width:120px;">
+           <div style="font-size:0.78rem;color:#888;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:2px;">Venezuela</div>
+           <div style="font-size:1rem;font-weight:700;color:#1a1a1a;">${place.name}</div>
+         </div>`
+      );
       info.open({ map, anchor: marker });
     }, 250);
   }
