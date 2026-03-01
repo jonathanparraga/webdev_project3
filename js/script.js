@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", () => {
   initSliderWithMap();
 });
@@ -7,7 +9,6 @@ window.initMap = function initMap() {
   const mapEl = document.getElementById("map");
   if (!mapEl) return;
 
-  // Bounds aproximados para que se vea todo Venezuela
   const veBounds = new google.maps.LatLngBounds(
     { lat: 0, lng: -74 },
     { lat: 16, lng: -59 }
@@ -31,7 +32,7 @@ window.initMap = function initMap() {
 
   const info = new google.maps.InfoWindow();
 
-  // Guardar referencias globales para que el slider las use
+  // Save refs for slider
   window.__veMap = map;
   window.__veMarker = marker;
   window.__veInfo = info;
@@ -45,6 +46,7 @@ function initSliderWithMap() {
   const slides = Array.from(slider.querySelectorAll("[data-slide]"));
   const prevBtn = slider.querySelector("[data-prev]");
   const nextBtn = slider.querySelector("[data-next]");
+
   if (!track || slides.length === 0 || !prevBtn || !nextBtn) return;
 
   const places = {
@@ -57,7 +59,6 @@ function initSliderWithMap() {
   let index = 0;
 
   function updateSlider() {
-    // mueve 1 slide a la vez
     track.style.transform = `translateX(-${index * 100}%)`;
     updateMapFromSlide();
   }
@@ -72,21 +73,21 @@ function initSliderWithMap() {
     const marker = window.__veMarker;
     const info = window.__veInfo;
 
-    // Si el mapa aún no está listo, no hagas nada (evita errores)
+    // Map may not be ready yet if user clicks fast
     if (!map || !marker || !info) return;
 
-    // Un SOLO marcador: se mueve al lugar actual
+    // Move single marker
     marker.setPosition(place.pos);
     marker.setTitle(place.name);
 
-    // Mantener vista general del país
+    // Fit country view
     const veBounds = new google.maps.LatLngBounds(
       { lat: 0, lng: -74 },
       { lat: 16, lng: -59 }
     );
     map.fitBounds(veBounds);
 
-    // Abrir la etiqueta del lugar
+    // Open label
     window.setTimeout(() => {
       info.setContent(`<strong>${place.name}</strong>`);
       info.open({ map, anchor: marker });
@@ -103,6 +104,5 @@ function initSliderWithMap() {
     updateSlider();
   });
 
-  // Inicial
   updateSlider();
 }
