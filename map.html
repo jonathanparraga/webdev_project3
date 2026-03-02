@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js" defer></script>
-  <title>map.html</title>
+  <title>Map</title>
 </head>
 <body class="page-map">
   <header>
@@ -20,47 +20,54 @@
       </ul>
     </nav>
   </header>
-  
+
   <main>
-  <section data-slider class="places">
-    <h2>Venezuela: Must-See Places</h2>
-    <p>Click Next/Prev to explore. The map updates with each place.</p>
+    <section data-slider class="places">
+      <h2>Venezuela: Must-See Places</h2>
+      <p>Click Next/Prev to explore. The map updates with each place.</p>
 
-    <div class="slider" aria-label="Venezuela place slider">
-      <div class="slider-track" data-track>
-        <figure class="slide" data-slide data-place="angel">
-          <img src="media/images/salto-angel.jpg" alt="Salto Ángel in Venezuela" />
-          <figcaption>Salto Ángel - The tallest waterfall in the world, a geological wonder and a UNESCO World Heritage Site.</figcaption>
-        </figure>
+      <div class="slider" aria-label="Venezuela place slider">
+        <div class="slider-track" data-track>
+          <figure class="slide" data-slide data-place="angel">
+            <img src="media/images/salto-angel.jpg" alt="Salto Ángel in Venezuela" />
+            <figcaption>Salto Ángel - The tallest waterfall in the world, a geological wonder and a UNESCO World Heritage Site.</figcaption>
+          </figure>
 
-        <figure class="slide" data-slide data-place="bolivar">
-          <img src="media/images/Mount-Pico-Bolivar.jpg" alt="Pico Bolívar in Venezuela" />
-          <figcaption>Pico Bolívar - the highest peak in Venezuela and an iconic symbol of the Andes.</figcaption>
-        </figure>
+          <figure class="slide" data-slide data-place="bolivar">
+            <img src="media/images/Mount-Pico-Bolivar.jpg" alt="Pico Bolívar in Venezuela" />
+            <figcaption>Pico Bolívar - the highest peak in Venezuela and an iconic symbol of the Andes.</figcaption>
+          </figure>
 
-        <figure class="slide" data-slide data-place="medanos">
-          <img src="media/images/medanos_coro.jpg" alt="Médanos de Coro in Venezuela" />
-          <figcaption>Médanos de Coro - Venezuela’s iconic desert landscape, a stunning expanse of golden sand dunes.</figcaption>
-        </figure>
+          <figure class="slide" data-slide data-place="medanos">
+            <img src="media/images/medanos_coro.jpg" alt="Médanos de Coro in Venezuela" />
+            <figcaption>Médanos de Coro - Venezuela’s iconic desert landscape, a stunning expanse of golden sand dunes.</figcaption>
+          </figure>
 
-        <figure class="slide" data-slide data-place="roques">
-          <img src="media/images/los_roques.jpg" alt="Los Roques beaches in Venezuela" />
-          <figcaption>Los Roques - A pristine Caribbean archipelago known for its crystal-clear waters and white sandy beaches.</figcaption>
-        </figure>
+          <figure class="slide" data-slide data-place="roques">
+            <img src="media/images/los_roques.jpg" alt="Los Roques beaches in Venezuela" />
+            <figcaption>Los Roques - A pristine Caribbean archipelago known for its crystal-clear waters and white sandy beaches.</figcaption>
+          </figure>
+        </div>
       </div>
-    </div>
 
-    <div class="slider-controls">
-      <button type="button" data-prev aria-label="Previous slide">Prev</button>
-      <button type="button" data-next aria-label="Next slide">Next</button>
-    </div>
-  </section>
+      <div class="slider-controls">
+        <button type="button" data-prev aria-label="Previous slide">Prev</button>
+        <button type="button" data-next aria-label="Next slide">Next</button>
+      </div>
+    </section>
 
-  <section>
-    <div id="map"></div>
-  </section>
+    <section>
+      <div id="map"></div>
+    </section>
   </main>
-    <script src="https://maps.googleapis.com/maps/api/js?AIzaSyBM1F-BpX660SBK3-Vw9O9f7AEvTAIH8rI&callback=initMap"
-    async defer></script>
+  <footer>
+    <p>Created by Jonathan Parraga</p>
+    <address>
+      <p>Email: <a href="mailto:jparraga@hawk.illinoistech.edu">jparraga@hawk.illinoistech.edu</a></p>
+    </address>
+    <img src="media/images/venezuelan-flag.png" alt="Venezuelan Flag">  
+  </footer>
+  <script src="https://maps.googleapis.com/maps/api/js?AIzaSyBM1F-BpX660SBK3-Vw9O9f7AEvTAIH8rI&callback=initMap"
+  async defer></script>
 </body>
 </html>
