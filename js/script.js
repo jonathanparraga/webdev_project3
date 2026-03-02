@@ -102,7 +102,7 @@ function initSliderWithMap() {
 
  
     map.panTo(place.pos);
-    map.setZoom(8);
+    map.setZoom(7);
 
     window.clearTimeout(window.__veInfoTimer);
     window.__veInfoTimer = window.setTimeout(() => {
