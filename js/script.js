@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSliderWithMap();
 });
 
-/* Google Maps callback must be global */
+
 window.initMap = function initMap() {
   const mapEl = document.getElementById("map");
   if (!mapEl) return;
@@ -32,13 +32,12 @@ window.initMap = function initMap() {
 
   const info = new google.maps.InfoWindow();
 
-  // Save refs for slider
+
   window.__veMap = map;
   window.__veMarker = marker;
   window.__veInfo = info;
 
-  // FIX 1: Once the map is ready, immediately sync it with whichever slide is active.
-  // This handles the race condition where the slider initializes before Google Maps loads.
+
   if (typeof window.__veUpdateMap === "function") {
     window.__veUpdateMap();
   }
@@ -64,19 +63,17 @@ function initSliderWithMap() {
 
   let index = 0;
 
-  // FIX 2: Force every slide to be exactly the same width as the track container.
-  // This prevents multiple images from showing side-by-side.
   function syncSlideWidths() {
     const w = track.parentElement.offsetWidth;
     slides.forEach((slide) => {
       slide.style.flex = "0 0 " + w + "px";
       slide.style.width = w + "px";
     });
-    // Re-apply transform after resize so the active slide stays visible.
+    
     track.style.transform = `translateX(-${index * w}px)`;
   }
 
-  // Run once on init and again if the window is resized.
+ 
   syncSlideWidths();
   window.addEventListener("resize", syncSlideWidths);
 
@@ -96,18 +93,17 @@ function initSliderWithMap() {
     const marker = window.__veMarker;
     const info = window.__veInfo;
 
-    // Map may not be ready yet — store the update function so initMap() can call it later.
+ 
     if (!map || !marker || !info) return;
 
-    // Move marker to the new place
+   
     marker.setPosition(place.pos);
     marker.setTitle(place.name);
 
-    // Zoom into the specific place instead of showing the whole country
+ 
     map.panTo(place.pos);
-    map.setZoom(9);
+    map.setZoom(8);
 
-    // Open info window with styled title
     window.clearTimeout(window.__veInfoTimer);
     window.__veInfoTimer = window.setTimeout(() => {
       info.setContent(
@@ -120,8 +116,7 @@ function initSliderWithMap() {
     }, 250);
   }
 
-  // FIX 3: Expose the map-sync function globally so initMap() can trigger it
-  // after Google Maps finishes loading (resolves the async race condition).
+
   window.__veUpdateMap = updateMapFromSlide;
 
   prevBtn.addEventListener("click", () => {
