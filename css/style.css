@@ -732,11 +732,10 @@ iframe:hover {
   display: block;
   width: 100%;
   max-width: none;
-  /* Use aspect-ratio so height adapts to container width — no fixed px that clips tall images */
-  aspect-ratio: 16 / 9;
-  /* contain = whole image always visible, no cropping; background fills the empty space */
-  object-fit: contain;
-  background-color: #0b0f14;
+  /* FIX: fixed height + object-fit so ALL images are the same size regardless of original dimensions */
+  height: 26rem;
+  object-fit: cover;
+  object-position: center;
   margin: 0;
   border-radius: 0;
   border: 0;
@@ -746,7 +745,7 @@ iframe:hover {
 
 @media (max-width: 48rem) {
   .places .slide img {
-    aspect-ratio: 4 / 3;
+    height: 18rem;
   }
 }
 
